@@ -1,0 +1,25 @@
+{
+  "name": "react-native-xcode",
+  "version": "1.0.0",
+  "description": "RN Plugin for opening XCode",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rhdeck/react-native-xcode.git"
+  },
+  "author": "Ray Deck",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/rhdeck/react-native-xcode/issues"
+  },
+  "homepage": "https://github.com/rhdeck/react-native-xcode#readme",
+  "dependencies": {
+    "glob": "^7.1.2"
+  },
+  "rnpm": {
+    "plugin": "plugin.js"
+  }
+}
