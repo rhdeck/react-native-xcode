@@ -6,7 +6,14 @@ const cp = require("child_process");
 module.exports = {
   name: "xcode",
   description: "Open xcode (workspace if it finds it, otherwise project",
-  func: () => {
+  options: [
+    {
+      command: "-a --application",
+      description:
+        "Only open with main XCode from /Applications. Useful if you have a beta installed."
+    }
+  ],
+  func: (arg, args, options) => {
     const cwd = process.cwd();
     const iosdir = path.join(cwd, "ios");
     if (!fs.existsSync(iosdir)) {
@@ -15,16 +22,23 @@ module.exports = {
     }
     const workspaceglob = path.join(iosdir, "*.xcworkspace");
     const wgs = glob.sync(workspaceglob);
+    var clargs = [];
+    if (options.application) {
+      clargs.push("-a");
+      clargs.push("/Applications/Xcode.app");
+    }
     if (wgs && wgs.length) {
-      cp.spawn("open", [wgs[0]]);
-      console.log("Opening workspace", wgs[0]);
+      clargs.push(wgs[0]);
+      cp.spawn("open", clargs);
+      console.log("Opening workspace", clargs);
       return;
     }
     const projectglob = path.join(iosdir, "*.xcodeproj");
     const pgs = glob.sync(projectglob);
     if (pgs && pgs.length) {
-      cp.spawn("open", [pgs[0]]);
-      console.log("Opening project", pgs[0]);
+      clargs.push(pgs[0]);
+      cp.spawn("open", clargs);
+      console.log("Opening project", clargs);
       return;
     }
     console.log(
